@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/javascripts/client.js")
+  if group
+    body(onload= "clientSocket = createClientSocket('#{wssHost}', '#{wssPort}', #{JSON.stringify(user)}, undefined, #{JSON.stringify(group)}, '#{sessionId}');config2();")
+    div
+      div
+        div(class="head1") #{title} 
+        div(class="head2") #{description} 
+        div(class="menu") 
+          a(href="/") HOME
+          a(href="/invitations") INVITATIONS 
+          a(href="/contacts") CONTACTS 
+          a(href="/groups") GROUPS 
+          div(class="menu-log")
+            if user
+              div
+                img(class="menu-img" src="/upload/avatars/" + '#{user.avatar}' alt="Smiley face" height="42" width="42" )
+              div
+                a(href="/logout") LOGOUT
+            else
+              a(href="/loginForm") LOGIN
+      div(class = "body_sec")
+        div(id="Content")
+          block content
+  else
+    body(onload= "clientSocket = createClientSocket('#{wssHost}', '#{wssPort}', #{JSON.stringify(user)}, #{JSON.stringify(chatUser)}, undefined,  '#{sessionId}');config2();")
+      div
+        div
+          div(class="head1") #{title} 
+          div(class="head2") #{description} 
+          div(class="menu") 
+            a(href="/") HOME
+            a(href="/invitations") INVITATIONS 
+            a(href="/contacts") CONTACTS 
+            a(href="/groups") GROUPS 
+            div(class="menu-log")
+              if user
+                div
+                  img(class="menu-img" src="/upload/avatars/" + '#{user.avatar}' alt="Smiley face" height="42" width="42" )
+                div
+                  a(href="/logout") LOGOUT
+              else
+                a(href="/loginForm") LOGIN
+        div(class = "body_sec")
+          div(id="Content")
+            block content

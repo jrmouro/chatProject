@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  h1 Chat to
+  div(style="background-color: lightgreen;display: flex;flex-direction: column;justify-content: center;align-items: center;")
+    div(style="padding: 5px;width: 90%")
+      div(style="float:left;width:40%;justify-content: left;")
+        if(group)
+           h3 #{group.groupname}
+        else
+          h3 #{chatUser.username}
+      div(style="float:left;width:20%;justify-content: center;")
+        if(group)
+          img(class="menu-img" src="/upload/avatars/" + '#{group.avatar}' alt="Smiley face" height="42" width="42" )
+        else
+          img(class="menu-img" src="/upload/avatars/" + '#{chatUser.avatar}' alt="Smiley face" height="42" width="42" )
+      div(style="float:left;width:40%;justify-content: right")
+        p#isonline online
+    div#chatdiv
+      each val in chats
+        if val.emmiter[0]._id.equals(user._id)
+          div(class="chatMe")
+            div(class="msgMe")
+              img(class="menu-img" src="/upload/avatars/" + '#{val.emmiter[0].avatar}' alt="Smiley face" height="42" width="42" )
+              p(class="chatUsername")= 'Me'
+            div(class="msgMe")
+              if val.fileUploadId
+                a(href="/upload/chatfiles/"+val.fileUploadId.local target="_blank") '#{val.fileUploadId.original}'
+              p=(val.content)
+        else
+          div(class="chatUser")
+            div(class="chatMsg")
+              img(class="menu-img" src="/upload/avatars/" + '#{val.emmiter[0].avatar}' alt="Smiley face" height="42" width="42" )
+              p(class="chatUsername")=(val.emmiter[0].username)
+            div(class="chatMsg")
+              if val.fileUploadId
+                a(href="/upload/chatfiles/"+val.fileUploadId.local target="_blank") '#{val.fileUploadId.original}'
+              p=(val.content)
+    div 
+      textarea(type="text", placeholder="Message" rows="4" cols="33")#textchat
+      button(onclick='clientSocket.socket.sendMessage("chatMsg", document.getElementById("textchat").value);')#btnSend send 
+    div(style="padding: 5px;")
+      form(action="/fileUploadChat", method="post" enctype="multipart/form-data") 
+        label(for="file") File
+        input(type="file" name="chatfile")
+        input(type="hidden" id="emmiterId" name="emmiterId" value='#{user._id}')
+        input(type="hidden" id="receiverId" name="receiverId" value='#{chatUser._id}')
+        if group
+          input(type="hidden" id="groupId" name="groupId" value='#{group._id}')
+        input(type="submit", value="Send")

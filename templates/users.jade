@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  div#ContentHeader
+    h1 Users
+    div
+      ul
+      each val in users
+        li
+          a(href="/chatForm?user_id="+val._id)= val.username
+  

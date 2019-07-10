@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  div#ContentHeader
+    h1 Invitations
+    //if groups && groups.length > 0
+    div
+      //h4 Groups from
+      div(class="messageBox" style="background-color: lightgreen;")
+        each val in invitations          
+          div(class="message")
+            div                  
+              img(class="menu-img" src="/upload/avatars/" + '#{val.emmiter.avatar}' alt="Smiley face" height="42" width="42")
+              if val.group.length > 0
+                img(class="menu-img" src="/upload/avatars/" + '#{val.group[0].avatar}' alt="Smiley face" height="42" width="42" title= '#{val.group[0].groupname}')
+            div
+              p #{val.emmiter.username}   
+            div
+              a(href="/acceptInvitation?id="+val._id+"&emmiter="+val.emmiterId+"&receiver="+val.receiverId+"&group="+val.groupId) &#128515
+              a(href="/refuseInvitation?id="+val._id+"&emmiter="+val.emmiterId+"&receiver="+val.receiverId+"&group="+val.groupId) &#128527
+       

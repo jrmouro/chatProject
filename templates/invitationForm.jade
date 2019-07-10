@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  #ContentHeader
+    h1 Invitation
+    div(class="messageBox" style="background-color: lightgreen;")
+      if group
+        div(class="message")
+          div
+            img(class="menu-img" src="/upload/avatars/" + '#{group.avatar}' alt="Smiley face" height="42" width="42")
+          div
+            p #{group.groupname}  
+      else
+        h1 Contacts
+      form(action="/invitation", method="post") 
+        input(type="email", placeholder="email", name="email", required)
+        br
+        input(type="text", placeholder="message", name="message", required)
+        if group
+          input(type="hidden" id="groupId" name="groupId" value='#{group._id}')
+        br
+        input(type="submit", value="Send")

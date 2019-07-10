@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  div#ContentHeader
+    h1 Contacts
+    if contacts && contacts.length > 0
+      div
+        div(class="messageBox" style="background-color: lightgreen;")
+          each val in contacts
+            div(class="message")
+              div
+                img(class="menu-img" src="/upload/avatars/" + '#{val.avatar}' alt="Smiley face" height="42" width="42" )
+              div
+                p #{val.username}
+              div
+                a(href="/disruptContact?id="+val._id)  &#9760
+                a(href="/chatForm?chatUserId="+val._id) &#128232
+    div
+      h3 Invite
+      form(action="/invitation", method="post") 
+        input(type="email", placeholder="email", name="email", required)
+        br
+        input(type="text", placeholder="message", name="message", required)
+        br
+        input(type="submit", value="Send")
+  

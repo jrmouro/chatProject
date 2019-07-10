@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  div#ContentHeader
+    h1=titleFeedback
+    h2= message
+    form(action=link, method="get")
+      input(type="submit" value=btValue)

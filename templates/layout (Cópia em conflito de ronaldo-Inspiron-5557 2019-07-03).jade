@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/javascripts/client.js")
+  body(onload="clientSocket = createClientSocket('#{wssHost}', '#{wssPort}', #{JSON.stringify(user)},#{JSON.stringify(chatUser)},'#{sessionId}');config2();")
+  header
+  div(class="fixedMenu")
+    div(class="head1") #{title} 
+    div(class="head2") #{description} 
+
+    div(class="menu") 
+      a(href="/") HOME
+      a(href="/invitations") INVITATIONS 
+      a(href="/contacts") CONTACTS 
+      a(href="/groups") GROUPS 
+      div(class="menu-log")
+        if user
+          div
+            img(class="menu-img" src="/upload/avatars/" + '#{user.avatar}' alt="Smiley face" height="42" width="42" )
+          div
+            a(href="/logout") LOGOUT
+        else
+          a(href="/loginForm") LOGIN
+
+  //div(class = "body_sec")
+  div(id="Content" style="justify-content: center;margin-left: 20px; display: flex;")
+    block content
+
+  footer Footer Section
